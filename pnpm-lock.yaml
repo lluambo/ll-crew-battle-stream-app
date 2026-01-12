@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@jesterkit/exe-sveltekit':
+        specifier: ^0.1.7
+        version: 0.1.7(typescript@5.9.3)
     devDependencies:
       '@eslint/compat':
         specifier: ^1.4.0
@@ -292,6 +296,11 @@ packages:
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
+
+  '@jesterkit/exe-sveltekit@0.1.7':
+    resolution: {integrity: sha512-/EDDnbEuQmcLnslmOuDIubz3V9m6uovwxz8WBPhG13cM+r8edNyrcKAXwTzXRyyz/4WSJJZws03+KzI+sM5Nfg==}
+    peerDependencies:
+      typescript: ^5
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1515,6 +1524,10 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/retry@0.4.3': {}
+
+  '@jesterkit/exe-sveltekit@0.1.7(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
