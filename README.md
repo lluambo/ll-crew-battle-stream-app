@@ -2,7 +2,7 @@
 
 A local-first, web-based scoreboard manager designed for streamers. Control the match state in one tab and update your OBS overlays instantly without complex cloud hosting.
 
-![Crew Battle App Preview](https://via.placeholder.com/800x400?text=App+Preview+Placeholder)
+
 
 ## ✨ Features
 
