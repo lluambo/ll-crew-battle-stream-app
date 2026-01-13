@@ -1,44 +1,91 @@
-[# sv
+Crew Battle Admin (JesterKit)
+A local-first, web-based scoreboard manager designed for streamers. Control the match state in one tab and update your OBS overlays instantly without complex cloud hosting.
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+✨ Features
+Admin Dashboard: Easily manage team names, player lives, and active status.
 
-## Creating a project
+Drag & Drop Logos: Upload team logos directly from your computer (saved locally).
 
-If you're seeing this, you've probably already done this step. Congrats!
+Instant OBS Sync: Updates on the Admin panel reflect on the OBS overlays in ~1 second.
 
-```sh
-# create a new project in the current directory
-npx sv create
+Persistent Data: Scores and names are saved to a local data.json file, so you never lose progress if the app restarts.
 
-# create a new project in my-app
-npx sv create my-app
-```
+Transparent Overlays:
 
-## Developing
+Roster View: Displays full team lists, stocks, and logos.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Versus Overlay: A "Fight Card" lower-third showing the current active matchup.
 
-```sh
-npm run dev
+🚀 How to Run
+Option A: Using the Executable (Recommended for Streamers)
+If you have downloaded the standalone release (e.g., CrewBattle.exe or Linux binary):
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+Double-click the executable to start the app.
 
-## Building
+A terminal window may appear indicating the server is running on port 3000.
 
-To create a production version of your app:
+Open your browser to http://localhost:3000 to see the control panel.
 
-```sh
-npm run build
-```
+Copy the OBS links provided on the home page.
 
-You can preview the production build with `npm run preview`.
+Option B: Running from Source (For Developers)
+If you want to modify the code or run it using pnpm:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-# ll-crew-battle-stream-app
-](out: The output directory for the built binary (default: dist).
-binaryName: The name of the executable (default: app).
-embedStatic: Whether to embed static assets in the binary (default: true).
-target: The target platform for the binary (default to your current platform). Available targets: linux-x64, linux-x64-baseline, macos-arm64, windows-x64, windows-x64-baseline, darwin-x64, darwin-arm64, linux-x64-musl, linux-arm64-musl.
-volume: The volume mount point for the binary (no volume mount by default). Useful for persistent storage for self-hosting, usually /data.)
+Install Dependencies:
+
+Bash
+
+pnpm install
+Start Development Server:
+
+Bash
+
+pnpm dev
+Build & Preview (Production Mode):
+
+Bash
+
+pnpm build
+pnpm preview
+The app will be available at http://localhost:5173 (Dev) or http://localhost:4173 (Preview).
+
+🎥 OBS Setup Guide
+Open OBS Studio.
+
+Add a new Browser Source.
+
+Roster View:
+
+URL: http://localhost:3000/roster (Check port number based on how you launched it)
+
+Width: 1920
+
+Height: 1080
+
+Versus Overlay:
+
+URL: http://localhost:3000/overlay
+
+Width: 1920
+
+Height: 1080
+
+Important: If the view does not update, right-click the Browser Source > Properties > Refresh cache of current page.
+
+🛠️ How It Works
+This application is built with SvelteKit 5 and uses a local file-system database to ensure reliability during streams.
+
+The "Brain" (Server): When you launch the app, it creates a local web server on your computer. It reads and writes to a file named data.json located in the app's folder. This file acts as the "Single Source of Truth."
+
+The "Controller" (Admin Page): When you make changes (like removing a life), the Admin page sends a POST request to the server. The server updates data.json immediately.
+
+The "View" (OBS): The overlay pages in OBS automatically "poll" (ask) the server for new data every second. If the data.json file has changed, the overlay updates its visuals instantly. This bypasses browser security restrictions that usually stop OBS from talking to Chrome.
+
+🏗️ Built With
+SvelteKit - Full-stack framework
+
+Svelte 5 Runes - Reactive state management
+
+TailwindCSS & DaisyUI - Styling
+
+Node.js - Local runtime environment
