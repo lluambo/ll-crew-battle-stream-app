@@ -31,17 +31,17 @@ Copy the OBS links provided on the home page.
 Option B: Running from Source (For Developers)
 If you want to modify the code or run it using pnpm:
 
-Install Dependencies:
+1. Install Dependencies:
 
 Bash
 
 pnpm install
-Start Development Server:
+2. Start Development Server:
 
 Bash
 
 pnpm dev
-Build & Preview (Production Mode):
+3. Build & Preview (Production Mode):
 
 Bash
 
