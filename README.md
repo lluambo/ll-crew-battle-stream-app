@@ -1,4 +1,4 @@
-# sv
+[# sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
@@ -37,3 +37,8 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 # ll-crew-battle-stream-app
+](out: The output directory for the built binary (default: dist).
+binaryName: The name of the executable (default: app).
+embedStatic: Whether to embed static assets in the binary (default: true).
+target: The target platform for the binary (default to your current platform). Available targets: linux-x64, linux-x64-baseline, macos-arm64, windows-x64, windows-x64-baseline, darwin-x64, darwin-arm64, linux-x64-musl, linux-arm64-musl.
+volume: The volume mount point for the binary (no volume mount by default). Useful for persistent storage for self-hosting, usually /data.)
