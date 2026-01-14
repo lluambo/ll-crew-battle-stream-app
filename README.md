@@ -22,12 +22,25 @@ A local-first, web-based scoreboard manager designed for fighting game streamers
     Get the latest executable for your OS from the [Releases page](#).
 2.  **Run the App:**
     * **Windows:** Double-click `CrewBattle-windows.exe`. A black window will appear.
-    * **Mac:** Double-click the file. You may need to right-click > Open to bypass security.
+    * **Mac:** See the Mac section below.
     * **Linux:** See the section below.
 3.  **Open the Dashboard:**
     Go to `http://localhost:3000` in your web browser.
 4.  **Connect OBS:**
     Copy the links from the dashboard and paste them into OBS Browser Sources.
+
+### 🍎 Apple / macOS Users
+Because this app is not signed with an Apple Developer account, macOS may block it or show a message saying **"File is damaged and can't be opened."** This is a security feature called "Quarantine."
+
+**To fix this and run the app:**
+1.  **Extract** the downloaded `.zip` file.
+2.  Open your **Terminal** app.
+3.  Type `xattr -cr` followed by a **space** (don't press enter yet).
+4.  **Drag and drop** the Crew Battle file into the terminal window (this pastes the file path).
+5.  Press **Enter**.
+6.  You can now double-click the app to run it normally!
+
+*Note: Use the `arm64` version for M1/M2/M3 chips, and `x64` for older Intel Macs.*
 
 ### 🐧 Linux Users (Important!)
 If you double-click the file and nothing happens, the app is likely running **silently in the background**. You need to see the terminal window to close it later.
