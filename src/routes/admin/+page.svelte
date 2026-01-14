@@ -29,6 +29,11 @@
 				<ul class="dropdown-content menu z-1 w-52 rounded-box bg-base-100 p-2 shadow">
 					<li><a href="./roster" target="_blank">Open Roster View</a></li>
 					<li><a href="./overlay" target="_blank">Open Overlay View</a></li>
+					<li><a href="./tekken" target="_blank">Open Tekken View</a></li>
+					<li><a href="./sf6" target="_blank">Open SF6 View</a></li>
+					<li><a href="./blazblue" target="_blank">Open BlazBlue View</a></li>
+					<li><a href="./ggst" target="_blank">Open Guilty Gear View</a></li>
+					<li><a href="./2xko" target="_blank">Open 2XKO View</a></li>
 				</ul>
 			</div>
 		</div>

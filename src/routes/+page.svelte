@@ -1,4 +1,6 @@
 <script lang="ts">
+	import path from 'node:path/win32';
+
 	// State to track which button currently says "Copied!"
 	let copiedId = $state<string | null>(null);
 
@@ -19,7 +21,37 @@
 			id: 'overlay',
 			name: 'Versus Overlay (OBS)',
 			path: '/overlay',
-			desc: 'Add as Browser Source. Shows current fight.'
+			desc: 'Add as Browser Source. Shows generic current fight.'
+		},
+		{
+			id: 'sf6',
+			name: 'SF6 Style Overlay (OBS)',
+			path: '/sf6',
+			desc: 'Add as Browser Source. Shows current fight in SF6 style.'
+		},
+		{
+			id: 'blazblue',
+			name: 'BlazBlue Style Overlay (OBS)',
+			path: '/blazblue',
+			desc: 'Add as Browser Source. Shows current fight in BlazBlue style.'
+		},
+		{
+			id: '2xko',
+			name: '2XKO Style Overlay (OBS)',
+			path: '/2xko',
+			desc: 'Add as Browser Source. Shows current fight in 2xko style.'
+		},
+		{
+			id: 'tekken',
+			name: 'Tekken Style Overlay (OBS)',
+			path: '/tekken',
+			desc: 'Add as Browser Source. Shows current fight in Tekken style.'
+		},
+		{
+			id: 'ggst',
+			name: 'Guilty Gear Strive Style Overlay (OBS)',
+			path: '/ggst',
+			desc: 'Add as Browser Source. Shows current fight in Guilty Gear Strive style.'
 		}
 	];
 

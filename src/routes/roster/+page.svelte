@@ -36,7 +36,7 @@
 						</h1>
 						<div class="mt-1 flex items-center gap-3 {i === 1 ? 'flex-row-reverse' : 'flex-row'}">
 							<div
-								class="h-2 flex-1 rounded-full bg-gradient-to-r {i === 0
+								class="h-2 flex-1 rounded-full bg-linear-to-r {i === 0
 									? 'from-blue-500 to-transparent'
 									: 'from-transparent to-red-500'}"
 							></div>
