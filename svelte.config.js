@@ -5,10 +5,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
-		// If it's not set (running locally), it defaults to your current machine's OS.
 		adapter: adapter({
 			target: process.env.BUILD_TARGET,
-			name: 'llCrewBattleApp', // Optional: Set your preferred base binary name
+			binaryName: process.env.BUILD_TARGET?.includes('windows') ? 'CrewBattle.exe' : 'CrewBattle',
+
 			out: 'dist'
 		})
 	}

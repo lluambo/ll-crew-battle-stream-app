@@ -60,7 +60,6 @@ jobs:
 
       - name: Rename Binary
         run: |
-          # Grab version from tag OR use 'manual-build' if triggered manually
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
           else
@@ -69,11 +68,14 @@ jobs:
 
           OUTPUT_NAME=CrewBattle-${{ matrix.os_name }}-${VERSION}${{ matrix.ext }}
 
-          # Check for 'CrewBattle' (your config name) or default 'app'
-          if [ -f "dist/CrewBattle${{ matrix.ext }}" ]; then
-            mv "dist/CrewBattle${{ matrix.ext }}" "$OUTPUT_NAME"
-          elif [ -f "dist/app${{ matrix.ext }}" ]; then
-             mv "dist/app${{ matrix.ext }}" "$OUTPUT_NAME"
+          if [ -f "dist/CrewBattle.exe" ]; then
+            mv "dist/CrewBattle.exe" "$OUTPUT_NAME"
+          elif [ -f "dist/CrewBattle" ]; then
+            mv "dist/CrewBattle" "$OUTPUT_NAME"
+          elif [ -f "dist/app.exe" ]; then
+             mv "dist/app.exe" "$OUTPUT_NAME"
+          elif [ -f "dist/app" ]; then
+             mv "dist/app" "$OUTPUT_NAME"
           fi
 
           echo "ASSET_PATH=$OUTPUT_NAME" >> $GITHUB_ENV
