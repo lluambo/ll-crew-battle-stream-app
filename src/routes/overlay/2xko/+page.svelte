@@ -5,7 +5,6 @@
 	let p2 = $derived(crewState.teams[1].players.find((p) => p.active));
 </script>
 
-/** eslint-disable svelte/require-each-key */
 <div class="flex min-h-screen w-full flex-col items-center justify-end overflow-hidden pb-24">
 	{#if p1 && p2}
 		<div

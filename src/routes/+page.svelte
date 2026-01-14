@@ -1,127 +1,102 @@
 <script lang="ts">
-	import path from 'node:path/win32';
-
-	// State to track which button currently says "Copied!"
+	import { resolve } from '$app/paths';
 	let copiedId = $state<string | null>(null);
 
-	const links = [
+	// Core application links
+	const coreLinks = [
 		{
 			id: 'admin',
 			name: 'Admin Panel',
 			path: '/admin',
-			desc: 'Control the game state, scores, and teams.'
+			desc: 'Control match state, scores, and teams.',
+			color: 'btn-primary'
 		},
 		{
 			id: 'roster',
-			name: 'Roster View (OBS)',
+			name: 'Roster View',
 			path: '/roster',
-			desc: 'Add as Browser Source. Shows all players.'
-		},
-		{
-			id: 'overlay',
-			name: 'Versus Overlay (OBS)',
-			path: '/overlay',
-			desc: 'Add as Browser Source. Shows generic current fight.'
-		},
-		{
-			id: 'sf6',
-			name: 'SF6 Style Overlay (OBS)',
-			path: '/sf6',
-			desc: 'Add as Browser Source. Shows current fight in SF6 style.'
-		},
-		{
-			id: 'blazblue',
-			name: 'BlazBlue Style Overlay (OBS)',
-			path: '/blazblue',
-			desc: 'Add as Browser Source. Shows current fight in BlazBlue style.'
-		},
-		{
-			id: '2xko',
-			name: '2XKO Style Overlay (OBS)',
-			path: '/2xko',
-			desc: 'Add as Browser Source. Shows current fight in 2xko style.'
-		},
-		{
-			id: 'tekken',
-			name: 'Tekken Style Overlay (OBS)',
-			path: '/tekken',
-			desc: 'Add as Browser Source. Shows current fight in Tekken style.'
-		},
-		{
-			id: 'ggst',
-			name: 'Guilty Gear Strive Style Overlay (OBS)',
-			path: '/ggst',
-			desc: 'Add as Browser Source. Shows current fight in Guilty Gear Strive style.'
+			desc: 'Full team lists & stocks. Add as Browser Source.',
+			color: 'btn-neutral'
 		}
 	];
 
-	function copyLink(id: string, path: string) {
-		// window.location.origin gives us "http://localhost:5173" (or your IP) automatically
-		const fullUrl = `${window.location.origin}${path}`;
+	// The new game-specific overlays
+	const overlayLinks = [
+		{ id: 'gen', name: 'Generic VS', path: '/overlay', badge: 'Default' },
+		{ id: 't8', name: 'Tekken 8', path: '/overlay/tekken', badge: 'Cyber' },
+		{ id: 'sf6', name: 'Street Fighter 6', path: '/overlay/sf6', badge: 'Graffiti' },
+		{ id: 'gg', name: 'Guilty Gear', path: '/overlay/ggst', badge: 'Metal' },
+		{ id: 'bb', name: 'BlazBlue', path: '/overlay/blazblue', badge: 'Anime' },
+		{ id: '2x', name: '2XKO', path: '/overlay/2xko', badge: 'Modern' }
+	];
 
+	function copyLink(id: string, path: string) {
+		const fullUrl = `${window.location.origin}${path}`;
 		navigator.clipboard.writeText(fullUrl).then(() => {
 			copiedId = id;
-			// Reset the button text after 2 seconds
 			setTimeout(() => (copiedId = null), 2000);
 		});
 	}
 </script>
 
-<div class="hero min-h-screen bg-base-200 p-4 font-sans">
-	<div class="hero-content w-full max-w-5xl flex-col gap-8 lg:flex-row-reverse lg:gap-16">
-		<div class="text-center lg:text-left">
-			<h1 class="text-5xl font-black tracking-tighter">Crew Battle App</h1>
-			<p class="py-6 text-lg opacity-80">
-				A local-first scoreboard manager for streamers. <br />
-				Control the match in one tab, and add the view links directly into OBS.
+<div class="min-h-screen bg-base-200 p-8 font-sans">
+	<div class="mx-auto max-w-4xl space-y-8">
+		<div class="space-y-2 text-center">
+			<h1 class="text-5xl font-black tracking-tighter">Crew Battle Hub</h1>
+			<p class="mx-auto max-w-lg opacity-60">
+				Manage your stream locally. Open the Admin panel to control the game, then add the links
+				below to OBS.
 			</p>
-			<div class="flex justify-center gap-2 lg:justify-start">
-				<a href="/admin" class="btn btn-wide shadow-lg btn-primary">Start Admin Panel</a>
-			</div>
 		</div>
 
-		<div class="card w-full max-w-lg shrink-0 bg-base-100 shadow-2xl">
-			<div class="card-body">
-				<h2 class="mb-4 card-title border-b border-base-200 pb-2">OBS Links</h2>
+		<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+			{#each coreLinks as link (link.id)}
+				<div class="card border-l-4 border-primary bg-base-100 shadow-xl">
+					<div class="card-body">
+						<h2 class="card-title">{link.name}</h2>
+						<p class="mb-4 text-sm opacity-70">{link.desc}</p>
+						<div class="join w-full">
+							<a href={resolve(link.path)} target="_blank" class="btn join-item {link.color}"
+								>Open</a
+							>
+							<button class="btn join-item flex-1" onclick={() => copyLink(link.id, link.path)}>
+								{copiedId === link.id ? 'Copied!' : 'Copy Link'}
+							</button>
+						</div>
+					</div>
+				</div>
+			{/each}
+		</div>
 
-				<div class="flex flex-col gap-4">
-					{#each links as link (link.id)}
+		<div class="divider">Overlays</div>
+
+		<div class="card bg-base-100 shadow-xl">
+			<div class="card-body">
+				<h2 class="mb-4 card-title">Game Specific Overlays (1920x1080)</h2>
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					{#each overlayLinks as link (link.id)}
 						<div
-							class="flex flex-col gap-3 rounded-xl border border-base-200 bg-base-200/50 p-4 transition-all hover:border-base-300 hover:bg-base-200"
+							class="flex flex-col gap-2 rounded-xl border border-transparent bg-base-200 p-3 transition-all hover:border-base-300"
 						>
-							<div>
-								<div class="flex items-center gap-2">
-									<h3 class="text-lg font-bold">{link.name}</h3>
-									{#if link.id !== 'admin'}
-										<div class="badge badge-outline badge-sm opacity-50">1920x1080</div>
-									{/if}
-								</div>
-								<p class="mt-1 text-xs opacity-60">{link.desc}</p>
+							<div class="flex items-center justify-between">
+								<span class="font-bold">{link.name}</span>
+								<span class="badge badge-outline badge-sm opacity-50">{link.badge}</span>
 							</div>
 
-							<div class="join w-full shadow-sm">
-								<a href={link.path} target="_blank" class="btn join-item btn-sm btn-neutral"
-									>Open ↗</a
-								>
-
-								<div
-									class="join-item flex flex-1 items-center overflow-hidden bg-base-100 px-3 font-mono text-xs whitespace-nowrap opacity-70 select-all"
-								>
-									{@html link.path}
-								</div>
-
+							<div class="join grid grid-cols-2 shadow-sm">
+								<a href={resolve(link.path)} target="_blank" class="btn join-item btn-xs">View ↗</a>
 								<button
-									class="btn join-item min-w-20 btn-sm"
+									class="btn join-item btn-xs"
 									class:btn-success={copiedId === link.id}
 									class:text-white={copiedId === link.id}
 									onclick={() => copyLink(link.id, link.path)}
 								>
-									{#if copiedId === link.id}
-										Copied!
-									{:else}
-										Copy
-									{/if}
+									{copiedId === link.id ? '✓' : 'Copy'}
 								</button>
+							</div>
+
+							<div class="truncate px-1 font-mono text-[10px] opacity-30 select-all">
+								{link.path}
 							</div>
 						</div>
 					{/each}

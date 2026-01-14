@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { crewState } from '$lib/state/crew.svelte';
+	import { resolve } from '$app/paths';
 
 	const handleLogo = (e: Event, teamIndex: 0 | 1) => {
 		const input = e.target as HTMLInputElement;
@@ -26,14 +27,24 @@
 
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" role="button" class="btn btn-primary">OBS Links ▼</div>
-				<ul class="dropdown-content menu z-1 w-52 rounded-box bg-base-100 p-2 shadow">
-					<li><a href="./roster" target="_blank">Open Roster View</a></li>
-					<li><a href="./overlay" target="_blank">Open Overlay View</a></li>
-					<li><a href="./tekken" target="_blank">Open Tekken View</a></li>
-					<li><a href="./sf6" target="_blank">Open SF6 View</a></li>
-					<li><a href="./blazblue" target="_blank">Open BlazBlue View</a></li>
-					<li><a href="./ggst" target="_blank">Open Guilty Gear View</a></li>
-					<li><a href="./2xko" target="_blank">Open 2XKO View</a></li>
+				<ul
+					tabindex="0"
+					class="dropdown-content menu z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
+				>
+					<li>
+						<a href={resolve('/roster')} target="_blank">Open Roster View</a>
+					</li>
+					<li>
+						<a href={resolve('/overlay')} target="_blank">Open Generic VS</a>
+					</li>
+
+					<div class="divider my-0"></div>
+
+					<li><a href={resolve('/overlay/sf6')} target="_blank">Open SF6</a></li>
+					<li><a href={resolve('/overlay/tekken')} target="_blank">Open Tekken</a></li>
+					<li><a href={resolve('/overlay/ggst')} target="_blank">Open Guilty Gear</a></li>
+					<li><a href={resolve('/overlay/blazblue')} target="_blank">Open BlazBlue</a></li>
+					<li><a href={resolve('/overlay/2xko')} target="_blank">Open 2XKO</a></li>
 				</ul>
 			</div>
 		</div>
