@@ -1,8 +1,8 @@
 # Crew Battle Admin (JesterKit)
 
-A local-first, web-based scoreboard manager designed for fighting game streamers. Control the match state in one tab and update your OBS overlays instantly without needing a online service.
+A local-first, web-based scoreboard manager designed for fighting game streamers. Control the match state in one tab and update your OBS overlays instantly without complex cloud hosting.
 
-
+![App Preview](https://via.placeholder.com/800x400?text=Crew+Battle+Admin+Preview)
 
 ## ✨ Features
 
@@ -19,14 +19,22 @@ A local-first, web-based scoreboard manager designed for fighting game streamers
 **No installation required.** This is the easiest way to use the app.
 
 1.  **Download the Release:**
-    Get the latest executable for your OS (Windows `.exe`, Linux, or Mac) from the [Releases page](#).
+    Get the latest executable for your OS from the [Releases page](#).
 2.  **Run the App:**
-    Double-click the file (e.g., `CrewBattle-windows.exe`).
-    * *Note: A black terminal window will open. Keep this open! Closing it shuts down the app.*
+    * **Windows:** Double-click `CrewBattle-windows.exe`. A black window will appear.
+    * **Mac:** Double-click the file. You may need to right-click > Open to bypass security.
+    * **Linux:** See the section below.
 3.  **Open the Dashboard:**
     Go to `http://localhost:3000` in your web browser.
 4.  **Connect OBS:**
     Copy the links from the dashboard and paste them into OBS Browser Sources.
+
+### 🐧 Linux Users (Important!)
+If you double-click the file and nothing happens, the app is likely running **silently in the background**. You need to see the terminal window to close it later.
+
+**How to run it properly:**
+* **Option 1 (Terminal):** Open your terminal, drag the file into it, and hit Enter.
+* **Option 2 (Launcher):** Create a Desktop Shortcut/Launcher and ensure **"Run in Terminal"** is checked in the properties.
 
 ---
 
@@ -88,7 +96,8 @@ If running from the executable, use port `3000`. If running from source (`pnpm d
 ## ❓ FAQ & Troubleshooting
 
 **How do I close the program?**
-Simply close the terminal/command prompt window that opened when you started the app.
+* **Windows:** Close the command prompt window.
+* **Linux/Mac:** Close the terminal window or press `Ctrl + C`.
 
 **The overlay isn't updating!**
 1.  Make sure the terminal window is still running.
