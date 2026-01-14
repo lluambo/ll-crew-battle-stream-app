@@ -1,0 +1,93 @@
+name: Build and Release
+
+on:
+  # This allows you to click a "Run workflow" button manually!
+  workflow_dispatch:
+  # This still triggers automatically if you push a tag like v1.0.0
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build for ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: linux-x64
+            os_name: linux
+            ext: ''
+          - target: windows-x64
+            os_name: windows
+            ext: '.exe'
+          - target: darwin-arm64
+            os_name: macos-arm64
+            ext: ''
+          - target: darwin-x64
+            os_name: macos-intel
+            ext: ''
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build Project
+        env:
+          BUILD_TARGET: ${{ matrix.target }}
+        run: pnpm build
+
+      - name: Rename Binary
+        run: |
+          # Grab version from tag OR use 'manual-build' if triggered manually
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION="manual-build"
+          fi
+
+          OUTPUT_NAME=CrewBattle-${{ matrix.os_name }}-${VERSION}${{ matrix.ext }}
+
+          # Check for 'CrewBattle' (your config name) or default 'app'
+          if [ -f "dist/CrewBattle${{ matrix.ext }}" ]; then
+            mv "dist/CrewBattle${{ matrix.ext }}" "$OUTPUT_NAME"
+          elif [ -f "dist/app${{ matrix.ext }}" ]; then
+             mv "dist/app${{ matrix.ext }}" "$OUTPUT_NAME"
+          fi
+
+          echo "ASSET_PATH=$OUTPUT_NAME" >> $GITHUB_ENV
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ env.ASSET_PATH }}
+
+      # OPTIONAL: Upload as an 'Artifact' so you can download it even if it's not a real release
+      - name: Upload Artifact (Manual Run)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: CrewBattle-${{ matrix.os_name }}
+          path: ${{ env.ASSET_PATH }}
