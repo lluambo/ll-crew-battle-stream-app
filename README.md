@@ -1,4 +1,4 @@
-# Crew Battle Admin (JesterKit)
+# Crew Battle Admin & Overlays
 
 A local-first, web-based scoreboard manager designed for fighting game streamers. Control the match state in one tab and update your OBS overlays instantly without complex cloud hosting.
 
