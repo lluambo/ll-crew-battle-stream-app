@@ -20,13 +20,17 @@
 <div class="min-h-screen bg-base-300 p-4 font-sans">
 	<nav class="navbar sticky top-2 z-10 mb-6 rounded-box bg-base-100 shadow-lg">
 		<div class="flex-1">
-			<span class="btn text-xl font-bold tracking-tighter btn-ghost">🎮 Crew Battle Admin</span>
+			<span class="btn text-xl font-bold tracking-tighter btn-ghost"
+				><a href={resolve('/')} class="link">🎮 Crew Battle Admin</a></span
+			>
 		</div>
 		<div class="flex-none gap-2">
 			<button class="btn btn-warning" onclick={() => crewState.swapSides()}>Swap Sides ↔️</button>
 
 			<div class="dropdown dropdown-end">
+				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 				<div tabindex="0" role="button" class="btn btn-primary">OBS Links ▼</div>
+				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 				<ul
 					tabindex="0"
 					class="dropdown-content menu z-[1] w-52 rounded-box bg-base-100 p-2 shadow"

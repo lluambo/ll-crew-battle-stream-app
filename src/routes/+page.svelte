@@ -18,7 +18,7 @@
 			desc: 'Full team lists & stocks. Add as Browser Source.',
 			color: 'btn-neutral'
 		}
-	];
+	] as const;
 
 	// The new game-specific overlays
 	const overlayLinks = [
@@ -28,7 +28,7 @@
 		{ id: 'gg', name: 'Guilty Gear', path: '/overlay/ggst', badge: 'Metal' },
 		{ id: 'bb', name: 'BlazBlue', path: '/overlay/blazblue', badge: 'Anime' },
 		{ id: '2x', name: '2XKO', path: '/overlay/2xko', badge: 'Modern' }
-	];
+	] as const;
 
 	function copyLink(id: string, path: string) {
 		const fullUrl = `${window.location.origin}${path}`;
