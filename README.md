@@ -19,7 +19,7 @@ A local-first, web-based scoreboard manager designed for fighting game streamers
 **No installation required.** This is the easiest way to use the app.
 
 1.  **Download the Release:**
-    Get the latest executable for your OS from the [Releases page](#).
+    Get the latest executable for your OS from the [Releases page](https://github.com/lluambo/ll-crew-battle-stream-app/releases).
 2.  **Run the App:**
     * **Windows:** Double-click `CrewBattle-windows.exe`. A black window will appear.
     * **Mac:** See the Mac section below.
@@ -92,7 +92,7 @@ If you want to modify the source code or build it yourself.
 
 ### 🎨 Available Overlays
 
-If running from the executable, use port `3000`. If running from source (`pnpm dev`), use port `5173`.
+If running from the executable, use port `3000`. If running from source (`pnpm dev`), use port `5173` or the port specified in the terminal.
 
 | Overlay Type | URL (Executable) | URL (Dev Mode) | Description |
 | :--- | :--- | :--- | :--- |
@@ -109,15 +109,17 @@ If running from the executable, use port `3000`. If running from source (`pnpm d
 ## ❓ FAQ & Troubleshooting
 
 **How do I close the program?**
-* **Windows:** Close the command prompt window.
-* **Linux/Mac:** Close the terminal window or press `Ctrl + C`.
+* **Windows:** Close the command prompt window. If you can't find it, press `Ctrl + Alt + Delete` and select "Task Manager". Find the "Command Prompt" process and click "End Task".
+* **Linux/Mac:** Close the terminal window or press `Ctrl + C`. If you can't find it, press `Ctrl + Alt + Delete` and select "System Monitor". Find the "Terminal" process and click "End Process".
 
 **The overlay isn't updating!**
-1.  Make sure the terminal window is still running.
+1.  Make sure the terminal window is still running. If you don't see a terminal window, the app is likely running silently in the background. You need to see the terminal window to close it later.
 2.  Ensure you have clicked "Active" (the radio button) on one player from **each** team in the Admin panel. The VS overlays hide themselves if a matchup isn't selected.
+3.  If you are running the app from source (`pnpm dev`), make sure you are using the correct port in your OBS Browser Source (usually `5173`, not `3000`).
 
 **I see "Unexpected href link" errors in my code?**
 Use the `resolve()` function from `$app/paths` for internal links to ensure they work in subdirectories.
+
 
 ---
 
