@@ -59,6 +59,7 @@ jobs:
         run: pnpm build
 
       - name: Rename Binary
+        id: rename
         run: |
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
@@ -78,13 +79,13 @@ jobs:
              mv "dist/app" "$OUTPUT_NAME"
           fi
 
-          echo "ASSET_PATH=$OUTPUT_NAME" >> $GITHUB_ENV
+          echo "asset_path=$OUTPUT_NAME" >> $GITHUB_OUTPUT
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ env.ASSET_PATH }}
+          files: ${{ steps.rename.outputs.asset_path }}
 
       # OPTIONAL: Upload as an 'Artifact' so you can download it even if it's not a real release
       - name: Upload Artifact (Manual Run)
@@ -92,4 +93,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CrewBattle-${{ matrix.os_name }}
-          path: ${{ env.ASSET_PATH }}
+          path: ${{ steps.rename.outputs.asset_path }}
