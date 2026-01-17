@@ -1,6 +1,32 @@
 <script lang="ts">
 	import { crewState } from '$lib/state/crew.svelte';
 	import { resolve } from '$app/paths';
+	interface SavedTeam {
+		name: string;
+		players: string[];
+	}
+
+	let { data }: { data: { savedTeams: SavedTeam[] } } = $props();
+	let savedTeams = data.savedTeams || [];
+
+	function loadPreset(teamIndex: 0 | 1, event: Event) {
+		const select = event.target as HTMLSelectElement;
+		const selectedTeamName = select.value;
+
+		const teamData = savedTeams.find((t) => t.name === selectedTeamName);
+
+		if (teamData) {
+			crewState.teams[teamIndex].name = teamData.name;
+			const playerList = teamData.players || [];
+
+			playerList.forEach((playerName, i) => {
+				if (i < 5) {
+					crewState.teams[teamIndex].players[i].name = playerName;
+				}
+			});
+		}
+		select.value = '';
+	}
 
 	const handleLogo = (e: Event, teamIndex: 0 | 1) => {
 		const input = e.target as HTMLInputElement;
@@ -28,8 +54,7 @@
 			<button class="btn btn-warning" onclick={() => crewState.swapSides()}>Swap Sides ↔️</button>
 
 			<div class="dropdown dropdown-end">
-				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-				<div tabindex="0" role="button" class="btn btn-primary">OBS Links ▼</div>
+				<button class="btn btn-primary">OBS Links ▼</button>
 				<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 				<ul
 					tabindex="0"
@@ -54,6 +79,52 @@
 		</div>
 	</nav>
 
+	<div class="collapse-arrow collapse mb-6 border border-base-300 bg-base-200">
+		<input type="checkbox" />
+		<div class="collapse-title flex items-center gap-2 text-xl font-medium">
+			ℹ️ How to Use & Controls
+		</div>
+		<div class="collapse-content space-y-4 text-sm">
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div>
+					<h3 class="mb-1 font-bold text-primary">🎮 Basic Controls</h3>
+					<ul class="list-inside list-disc space-y-1 opacity-80">
+						<li>
+							<strong>Active Button:</strong> Click the radio button (◎) next to a player to show them
+							on the VS Overlay.
+						</li>
+						<li>
+							<strong>Lives:</strong> Use the <span class="badge badge-xs badge-neutral">+</span>
+							and
+							<span class="badge badge-xs badge-neutral">-</span> buttons to change stocks.
+						</li>
+						<li>
+							<strong>Swap Sides:</strong> Click the yellow button in the navbar to swap Team 1 and Team
+							2 instantly.
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="mb-1 font-bold text-secondary">📂 Saved Teams</h3>
+					<ul class="list-inside list-disc space-y-1 opacity-80">
+						<li>
+							<strong>Load Preset:</strong> Use the dropdown menu inside the team card to fill all names.
+						</li>
+						<li>
+							<strong>Edit Teams:</strong> Open the <code>teams.json</code> file in the app folder to
+							add your own rosters.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="alert py-2 text-xs alert-info">
+				<span
+					><strong>Tip:</strong> The overlay updates automatically. You do not need to refresh OBS.</span
+				>
+			</div>
+		</div>
+	</div>
+
 	<div class="grid auto-rows-fr grid-cols-1 gap-6 lg:grid-cols-2">
 		{#each crewState.teams as team, i (team.id)}
 			<div
@@ -62,6 +133,16 @@
 				class:border-red-500={i === 1}
 			>
 				<div class="card-body p-4 sm:p-6">
+					<select
+						class="select-bordered select mb-4 w-full select-sm"
+						onchange={(e) => loadPreset(i as 0 | 1, e)}
+					>
+						<option value="" disabled selected>📂 Load a Saved Team...</option>
+						{#each savedTeams as savedTeam}
+							<option value={savedTeam.name}>{savedTeam.name}</option>
+						{/each}
+					</select>
+
 					<div
 						class="mb-4 flex flex-col items-center gap-4 border-b border-base-200 pb-4 sm:flex-row"
 					>
